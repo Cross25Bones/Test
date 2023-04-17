@@ -1,3 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mood Adjuster</title>
+	<style>
+		#main-page {
+			display: block;
+		}
 
-Hello World!
+		#destination-page, #destination-page2, #destination-page3 {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Mood Adjuster</h1>
+	</header>
+	<section id="main-page">
+		<main>
+			<h2>Feeling Down? Listen to some music!</h2>
+			<p>Click the buttons according to your mood</p>
+			<button id="destination-button" data-destination="destination-page">Feeling Stressed?</button>
+            <button id="destination-button2" data-destination="destination-page2">Feeling Sad?</button>
+            <button id="destination-button3" data-destination="destination-page3">Feeling Angry?</button>
+		</main>
+
+		<footer>
+			<p>&copy; 2023 My App</p>
+		</footer>
+	</section>
+	<section id="destination-page">
+		<h2>Relaxing Music</h2>
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/G8nNGk6LHaM" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+		<button id="back-button">Back</button>
+	</section>
+	<section id="destination-page2">
+    	<h2>Cheerful Music</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/1YvdAZ9LMik" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <button id="back-button2">Back</button>
+   </section>
+   <section id="destination-page3">
+    	<h2>Calming Music</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/de2TdvDaS5A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <button id="back-button3">Back</button>
+   </section>
+	<script>
+		var historyStack = [];
+		function navigateToPage(pageId) {
+			var currentPage = document.querySelector("section:not([style*='display: none'])");
+			historyStack.push(currentPage);
+			currentPage.style.display = "none";
+			var newPage = document.getElementById(pageId);
+			newPage.style.display = "block";
+			newPage.scrollIntoView();
+		}
+
+		var button1 = document.getElementById("destination-button");
+		button1.addEventListener("click", function() {
+			navigateToPage(button1.getAttribute("data-destination"));
+		});
+
+        var button2 = document.getElementById("destination-button2");
+		button2.addEventListener("click", function() {
+			navigateToPage(button2.getAttribute("data-destination"));
+		});
+
+        var button3 = document.getElementById("destination-button3");
+		button3.addEventListener("click", function() {
+			navigateToPage(button3.getAttribute("data-destination"));
+		});
+
+		var backButton = document.getElementById("back-button");
+		backButton.addEventListener("click", function() {
+			var previousPage = historyStack.pop();
+			var currentPage = document.querySelector("section:not([style*='display: none'])");
+			currentPage.style.display = "none";
+			previousPage.style.display = "block";
+			previousPage.scrollIntoView();
+		});
+
+		var backButton2 = document.getElementById("back-button2");
+		backButton2.addEventListener("click", function() {
+			var previousPage = historyStack.pop();
+			var currentPage = document.querySelector("section:not([style*='display: none'])");
+			currentPage.style.display = "none";
+			previousPage.style.display = "block";
+			previousPage.scrollIntoView();
+		});
+        
+        var backButton3 = document.getElementById("back-button3");
+		backButton3.addEventListener("click", function() {
+			var previousPage = historyStack.pop();
+			var currentPage = document.querySelector("section:not([style*='display: none'])");
+			currentPage.style.display = "none";
+			previousPage.style.display = "block";
+			previousPage.scrollIntoView();
+		});
+	</script>
+</body>
+</html>
+
 
