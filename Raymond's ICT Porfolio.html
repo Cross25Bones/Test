@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <div id="homeScreen">
+        <h1>Welcome to the Home Page</h1>
+        <p id="welcomeMessage"></p>
+        <button onclick="showSignup()">Sign Up</button>
+        <button onclick="showLogin()">Login</button>
+    </div>
+
+    <div id="loginSection" style="display: none;">
+        <h1>Login</h1>
+        <input type="text" id="loginUsernameInput" placeholder="Enter your Username">
+        <input type="password" id="loginPasswordInput" placeholder="Enter your Password">
+        <button onclick="login()">Login</button>
+        <button onclick="showHome()">Back to Home</button>
+        <p id="loginMessage"></p>
+    </div>
+
+    <div id="signupSection" style="display: none;">
+        <h1>Sign Up</h1>
+        <input type="text" id="signupUsernameInput" placeholder="Enter a Username">
+        <input type="password" id="signupPasswordInput" placeholder="Enter a Password">
+        <button onclick="signup()">Sign Up</button>
+        <button onclick="showHome()">Back to Home</button>
+        <p id="signupMessage"></p>
+    </div>
+
+    <div id="portfolioSection" style="display: none;">
+        <h1>Portfolio</h1>
+        <p>This is your portfolio content.</p>
+        <button onclick="backToHome()">Back to Home</button>
+    </div>
+
+    <script>
+        // Initialize registeredUsers from localStorage or an empty object
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
+
+        function showSignup() {
+            document.getElementById("homeScreen").style.display = "none";
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("signupSection").style.display = "block";
+        }
+
+        function showLogin() {
+            document.getElementById("homeScreen").style.display = "none";
+            document.getElementById("signupSection").style.display = "none";
+            document.getElementById("loginSection").style.display = "block";
+        }
+
+        function showHome() {
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("signupSection").style.display = "none";
+            document.getElementById("homeScreen").style.display = "block";
+        }
+
+        function showPortfolio() {
+            document.getElementById("homeScreen").style.display = "none";
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("signupSection").style.display = "none";
+            document.getElementById("portfolioSection").style.display = "block";
+        }
+
+        function backToHome() {
+            document.getElementById("portfolioSection").style.display = "none";
+            showHome();
+        }
+
+        function redirectToPortfolio() {
+            window.location.href = "https://sites.google.com/view/raymonds-ict-portfolio/home";
+        }
+
+        function login() {
+            const username = document.getElementById("loginUsernameInput").value;
+            const password = document.getElementById("loginPasswordInput").value;
+
+            // Check for empty fields
+            if (!username || !password) {
+                document.getElementById("loginMessage").textContent = "Please enter both username and password.";
+                return;
+            }
+
+            if (!registeredUsers[username]) {
+                document.getElementById("loginMessage").textContent = `Username '${username}' not found. Please sign up or check your credentials.`;
+                return;
+            }
+
+            if (registeredUsers[username].password !== password) {
+                document.getElementById("loginMessage").textContent = "Incorrect password. Please try again.";
+                return;
+            }
+
+            // Redirect to the portfolio after successful login
+            redirectToPortfolio();
+        }
+
+        function signup() {
+            const username = document.getElementById("signupUsernameInput").value;
+            const password = document.getElementById("signupPasswordInput").value;
+
+            // Check for empty fields
+            if (!username || !password) {
+                document.getElementById("signupMessage").textContent = "Please enter both username and password.";
+                return;
+            }
+
+            if (registeredUsers[username]) {
+                document.getElementById("signupMessage").textContent = `Username '${username}' has already been taken. Try again`;
+                return;
+            }
+
+            const now = new Date().toLocaleString();
+            registeredUsers[username] = { password, signupTime: now };
+
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+            // Redirect to the portfolio after successful signup
+            redirectToPortfolio();
+        }
+    </script>
+</body>
+</html>
